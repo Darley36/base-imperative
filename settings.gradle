@@ -1,0 +1,16 @@
+rootProject.name = 'ConnectSql'
+
+include ':app-service'
+include ':model'
+include ':usecase'
+include ':controller'
+project(':app-service').projectDir = file('./applications/app-service')
+project(':model').projectDir = file('./domain/model')
+project(':usecase').projectDir = file('./domain/usecase')
+project(':controller').projectDir = file('./domain/controller')
+include ':api-rest'
+project(':api-rest').projectDir = file('./infrastructure/entry-points/api-rest')
+include ':sqlserver'
+project(':sqlserver').projectDir = file('./infrastructure/driven-adapters/sqlserver')
+include ':mongo-repository'
+project(':mongo-repository').projectDir = file('./infrastructure/driven-adapters/mongo-repository')

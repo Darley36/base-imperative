@@ -1,0 +1,29 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+	implementation project( ':mongo-repository')
+	implementation project( ':sqlserver')
+	implementation project( ':api-rest')
+    implementation project(':model')
+    implementation project(':usecase')
+    implementation project(':controller')
+    implementation 'org.reactivecommons.utils:object-mapper:0.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.13'
+}
+
+task explodedJar(type: Copy) {
+    with jar
+    into "${buildDir}/exploded"
+}
+
+jar {
+    // To disable the *-plain.jar
+    enabled = false
+}
+
+bootJar {
+    // Sets output jar name
+    archiveFileName = "${project.getParent().getName()}.${archiveExtension.get()}"
+}
