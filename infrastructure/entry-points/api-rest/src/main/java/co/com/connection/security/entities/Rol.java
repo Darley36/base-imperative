@@ -3,6 +3,7 @@ package co.com.connection.security.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,9 +15,13 @@ import javax.persistence.*;
 public class Rol {
 
     @Id
+    @Column(name = "rol_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(length = 60)
     private String nombre;
+
+    @ManyToMany(mappedBy = "rolSet")
+    private Set<User> usuarios;
 }

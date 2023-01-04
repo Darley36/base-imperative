@@ -7,8 +7,10 @@ import co.com.connection.security.controller.DTO.RegistroDTO;
 import co.com.connection.security.entities.Rol;
 import co.com.connection.security.entities.User;
 import co.com.connection.security.entities.UserRol;
+import co.com.connection.security.entities.UsuariosRoles;
 import co.com.connection.security.entities.repository.RolRepositorio;
 import co.com.connection.security.entities.repository.UsuarioRepositorio;
+import co.com.connection.security.entities.repository.UsuariosRolesRepositorio;
 import co.com.connection.security.seguridad.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,8 +38,8 @@ public class AuthControlador {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    //@Autowired
-    //private UsuarioRolRepository usuarioRolRepository;
+    @Autowired
+    private UsuariosRolesRepositorio usuariosRolesRepositorio;
 
     @Autowired
     private RolRepositorio rolRepositorio;
@@ -96,18 +98,12 @@ public class AuthControlador {
         Rol roles = rolRepositorio.findByNombre(userRol.getRol()).get();
         Optional<User> user = usuarioRepositorio.findByUsername(userRol.getUsername());
 
-        //User.UserBuilder userBuilder = user.get().toBuilder();
-        //userBuilder.roles(Collections.singleton(roles));
+        UsuariosRoles usuariosRoles = UsuariosRoles.builder()
+                .idRol(roles.getId())
+                .idUsuario(user.get().getId())
+                .build();
 
-        User userUpdate = new User();
-        userUpdate.setId(user.get().getId());
-        userUpdate.setNombre(user.get().getNombre());
-        userUpdate.setUsername(user.get().getUsername());
-        userUpdate.setEmail(user.get().getEmail());
-        userUpdate.setPassword(user.get().getPassword());
-        userUpdate.setRoles(Collections.singleton(roles));
-
-        usuarioRepositorio.save(userUpdate);
+        usuariosRolesRepositorio.save(usuariosRoles);
         return new ResponseEntity<>("rol asignado exitosamente",HttpStatus.OK);
     }
 }
