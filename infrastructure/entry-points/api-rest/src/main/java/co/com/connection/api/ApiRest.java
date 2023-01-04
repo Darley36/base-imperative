@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +16,7 @@ public class ApiRest {
 
     private final UsuarioController usuarioController;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(path = "/path/sql")
     public ResponseEntity<Usuario> saveSql(@RequestBody Usuario usuario) throws Exception {
 
@@ -36,6 +38,7 @@ public class ApiRest {
         return new ResponseEntity<>(usuario, HttpStatus.NOT_FOUND);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(path = "/path/mongo")
     public ResponseEntity<Usuario> saveMongo(@RequestBody Usuario usuario) throws Exception {
 

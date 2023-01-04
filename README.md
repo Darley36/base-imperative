@@ -11,4 +11,4 @@
 - Ejemplo base para exponer un api que consuma los servicos de MongoDB y SQLServer
 - En este ejemplo se utiliza swagger V3
 - Arquitectura limpia de Bancolombia
-
+- Posee autenticacion con springSecurity y JWT
